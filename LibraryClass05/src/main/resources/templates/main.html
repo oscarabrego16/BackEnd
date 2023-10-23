@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title> Main </title>
+ 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+ 
+        body {
+            width: 100%;
+            height: 100vh;
+ 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+ 
+            background: gainsboro;
+        }
+ 
+        #box {
+            width: 100%;
+            max-width: 400px;
+            min-height: 400px;
+ 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+ 
+            padding: 2rem;
+            background: white;
+            
+            border-radius: 1rem;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+ 
+        #box form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .input-error{
+			border-color:crimson;
+}
+		.text-error{
+			color:crimson;
+		}
+	
+    </style>
+</head>
+<body>
+     <div id="box">
+        <h1> Main application </h1>
+        <h2 th:text="${time}" />
+        <h2 th:if="${error !=null}" th:text="${error}" class= "text-error"/>
+        <!--th:object representa todos los elementos que se encuentran en el controlador,
+        posteriromente debe mapear todos los inputs que estan dentro de este form como lo que se espera
+        se utiliza y se marca porque usando solo el name puede que a veces lo mapee-->
+             <form method = "post" th:action="@{/library/book}" th:object="${search}">
+     	<input type="text" th:field="*{isbn}" placeholder="isbn" th:errorclass="input-error"/>
+     	
+     	
+     	<div class="text-error" th:if="${#fields.hasErrors('isbn')}">
+     		<p>
+     			Error en ISBN
+     		</p>
+     		
+     		<ul>
+     			<li th:each="error: ${#fields.errors('isbn')}" th:text="${error}"/>
+     		</ul>
+     	</div >
+     	
+     	
+     	<input type = "text" th:field="*{person}" placeholder="Student name" th:errorclass="input-error"/>
+     	<div class="text-error" th:if="${#fields.hasErrors('person')}">
+     		<p>
+     			Error en Persona
+     		</p>
+     		
+     		<ul>
+     			<li th:each="error: ${#fields.errors('person')}" th:text="${error}"/>
+     		</ul>
+     	</div >
+     	
+     	
+     	
+     	<input type = "submit"/>
+     </form>
+     </div>
+     
+
+</body>
+</html>

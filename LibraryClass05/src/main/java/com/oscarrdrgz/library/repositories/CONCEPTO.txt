@@ -1,0 +1,3 @@
+Los repositorios son implementaciones de JPA
+que permiten realizar y ejecutar operaciones osbre un elemento
+o sobre una entidad en especifico
